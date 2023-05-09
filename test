@@ -1,1 +1,30 @@
-print('test')
+import cv2
+import numpy as np
+
+
+image= cv2.imread('plaque.jpg')
+
+
+height, width= image.shape[:2]
+
+
+image_gray= cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+
+ROI= np.array([[(120,height),(120,220),(750,220),(750,height)]], dtype= np.int32)
+
+
+blank= np.zeros_like(image_gray)
+
+
+region_of_interest= cv2.fillPoly(blank, ROI,255)
+
+region_of_interest_image= cv2.bitwise_and(image_gray, region_of_interest)
+
+
+cv2.imshow('Region of Interest', region_of_interest_image)
+
+
+cv2.waitKey()
+cv2.destroyAllWindows()
+
